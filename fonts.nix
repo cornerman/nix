@@ -12,10 +12,11 @@
       dejavu_fonts
       symbola # unicode symbols
       powerline-fonts
+      noto-fonts-emoji
     ];
     fontconfig = {
       includeUserConf = false;
-      defaultFonts.monospace = [ "Inconsolata" "DejaVu Sans Mono" ];
+      defaultFonts.monospace = [ "DejaVu Sans Mono" "Noto Emoji" ];
     };
   };
 }

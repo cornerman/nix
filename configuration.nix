@@ -1,4 +1,4 @@
-# Edit this configuration file to define what should be installed on your system.  Help is available in the configuration.nix(5) man page and in the NixOS manual (accessible by running ‘nixos-help’).  
+#Edit this configuration file to define what should be installed on your system.  Help is available in the configuration.nix(5) man page and in the NixOS manual (accessible by running ‘nixos-help’).  
 { config, pkgs, ... }:
 
 {
@@ -12,6 +12,7 @@
       ./users.nix
       ./services.nix
       ./nvidia.nix
+      #./intel-graphics.nix
       ./shadow.nix
       ./localization.nix
     ];
@@ -36,15 +37,25 @@
       "fs.inotify.max_user_watches" = 524288;
     };
 
+    # kernelParams = [ "nouveau.blacklist=1" "acpi_osi=!" "acpi_osi=\"Windows 2015\"" "acpi_backlight=vendor" "mem_sleep_default=deep" ];
+    kernelParams = [ "nouveau.blacklist=1" "acpi_rev_override=5" "mem_sleep_default=deep" ];
+
     tmpOnTmpfs = true;
 
     # extraModulePackages = [ config.boot.kernelPackages.exfat-nofuse ];
-    # extraModulePackages = [ config.boot.kernelPackages.rtl88x2bu ];
+    extraModulePackages = [ config.boot.kernelPackages.rtl88x2bu ];
   };
+
+  console.font = "Lat2-Terminus16";
 
   nix = {
     #TODO: https://github.com/NixOS/nix/issues/6572
     package = pkgs.nixVersions.nix_2_7;
+
+    extraOptions = ''
+      keep-outputs = true
+      keep-derivations = true
+    '';
 
     gc = {
       automatic = true;

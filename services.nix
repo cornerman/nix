@@ -14,12 +14,25 @@
       # no need to redefine it in your config for now)
       #media-session.enable = true;
 
+      config.pipewire-pulse = {
+        "stream.properties" = {
+          "resample.quality" = 10;
+        };
+      };
+
+      config.client = {
+        "stream.properties" = {
+          "resample.quality" = 10;
+        };
+      };
+
       config.pipewire = {
         "context.properties" = {
           #"link.max-buffers" = 64;
-          "link.max-buffers" = 16; # version < 3 clients can't handle more than this
-          "log.level" = 2; # https://docs.pipewire.org/#Logging
-          #"default.clock.rate" = 48000;
+          # "link.max-buffers" = 16; # version < 3 clients can't handle more than this
+          #"log.level" = 2; # https://docs.pipewire.org/#Logging
+          #"default.clock.rate" = 192000;
+          #"default.clock.allowed-rates" = [ 44100 48000 96000 192000 ];
           #"default.clock.quantum" = 1024;
           #"default.clock.min-quantum" = 32;
           #"default.clock.max-quantum" = 8192;
@@ -69,12 +82,13 @@
     blueman.enable = true;
 
     tlp = {
-       enable = true;
-       extraConfig = ''
-         tlp_DEFAULT_MODE=BAT
-         CPU_SCALING_GOVERNOR_ON_BAT=powersave
-         CPU_SCALING_GOVERNOR_ON_AC=powersave
-       '';
+      enable = true;
+      settings = {
+        tlp_DEFAULT_MODE = "AC";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
+      };
     };
 
     journald = {
@@ -156,6 +170,7 @@
       # dpi = 210;
       libinput.enable = true;
       libinput.touchpad = {
+        sendEventsMode = "disabled-on-external-mouse";
         scrollMethod = "twofinger";
         disableWhileTyping = true;
         tapping = false;

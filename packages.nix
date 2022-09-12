@@ -2,7 +2,7 @@
 
 {
   documentation = {
-    enable = false;
+    enable = true;
     man.enable = true;
   };
 
@@ -13,6 +13,10 @@
       # enablePepperFlash = true;
       # enablePepperPDF = true;
       enableWideVine = true;
+    };
+
+    polybar = pkgs.polybar.override {
+      i3Support = true;
     };
   };
 
@@ -35,7 +39,7 @@
 
     # pinentry-curses
 
-    slock
+    #slock
     xorg.xinit
     xorg.xauth
     xorg.xev
@@ -44,6 +48,7 @@
     python37Packages.py3status
     i3
     i3status
+    polybar
     xorg.xmodmap
     xdg_utils
     shared-mime-info
@@ -64,6 +69,9 @@
   ];
 
   programs = {
+    #TODO: does not work with video group on user
+    #light.enable = true;
+    slock.enable = true;
     adb.enable = true;
     ssh.startAgent = true;
     gnupg.agent = {
@@ -78,6 +86,8 @@
 		source "${pkgs.fzf}/share/fzf/key-bindings.zsh"
 	      '';
     };
+
+    java.enable = true;
   };
 
   virtualisation = {
@@ -92,11 +102,14 @@
   security = {
     # rtkit.enable = false;
     polkit.enable = true;
-    # wrappers = {
-    #   pmount.source = "${pkgs.pmount}/bin/pmount";
-    #   pumount.source = "${pkgs.pmount}/bin/pumount";
-    #   light.source = "${pkgs.light}/bin/light";
-    #   slock.source = "${pkgs.slock}/bin/slock";
-    # };
+    wrappers = {
+    #	pmount.source = "${pkgs.pmount}/bin/pmount";
+    #	pumount.source = "${pkgs.pmount}/bin/pumount";
+    	light.source = "${pkgs.light}/bin/light";
+     	light.owner = "root";
+     	light.group = "root";
+     	light.setuid = true;
+    #	slock.source = "${pkgs.slock}/bin/slock";
+    };
   };
 }

@@ -9,7 +9,7 @@
     #wireless.userControlled.enable = true;
     #wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
-    # firewall.allowedTCPPorts = [ 12345 ];
+    firewall.allowedTCPPorts = [ 12345 ];
     # firewall.allowedUDPPorts = [ ... ];
     # firewall.enable = false;
 

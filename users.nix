@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  security.sudo.extraConfig = "cornerman ALL=(ALL) NOPASSWD: /home/cornerman/bin/fix_usb_power";
+
   users = {
     extraGroups.vboxusers.members = [ "cornerman" ];
 
